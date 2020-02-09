@@ -7,6 +7,7 @@ import jds_project.ddns.client.Client;
 import jds_project.ddns.header.HEADER;
 import jds_project.ddns.header.HEADER.what;
 import jds_project.ddns.objects.ServerData;
+import jds_project.ddns.utils.NetUtils;
 
 public class InitClient {
 
@@ -63,15 +64,15 @@ public class InitClient {
 				if (i == 4) {
 					serverData.setPassword(args[4]);
 				}
-				// EXTERNAL IP
-				if (i == 5) {
-					serverData.setExternal_IP(args[5]);
-				}
+
 				if (HEADER.debug == true) {
 					System.out.println(i + ":" + args[i]);
 
 				}
 			}
+			// EXTERNAL IP
+			serverData.setExternal_IP(NetUtils.getExternalIP());
+
 			if (HEADER.debug == true) {
 				System.out.println(
 						//

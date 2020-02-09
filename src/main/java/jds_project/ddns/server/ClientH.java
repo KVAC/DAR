@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import jds_project.ddns.header.HEADER;
 import jds_project.ddns.header.HEADER.what;
+import jds_project.ddns.objects.NetWorkCMD;
 import jds_project.ddns.objects.ServerData;
 
 public class ClientH implements Runnable {
@@ -35,6 +36,7 @@ public class ClientH implements Runnable {
 				try {
 					// чтение
 					object = ois.readObject();
+
 					if (object instanceof ServerData) {
 						ServerData data = (ServerData) object;
 						System.out.println(data.getCommand() + ":" + data.getID() + ":" + data.getPassword() + ":"
@@ -70,7 +72,6 @@ public class ClientH implements Runnable {
 										}
 									}
 								}
-
 							} else if (data.getCommand().equals(what.getIP)) {
 								for (ServerData element : HEADER.datas) {
 									if (element.getID().equals(data.getID())) {
@@ -79,7 +80,12 @@ public class ClientH implements Runnable {
 									}
 								}
 							}
-
+						}
+					} else if (object instanceof NetWorkCMD) {
+						NetWorkCMD cmd = (NetWorkCMD) object;
+						if (cmd.getCommand().equals(jds_project.ddns.objects.NetWorkCMD.cmd.end)) {
+							System.out.println("aaa");
+							break;
 						}
 					}
 				} catch (Exception e) {

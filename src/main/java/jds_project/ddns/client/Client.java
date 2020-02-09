@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import jds_project.ddns.objects.NetWorkCMD;
+import jds_project.ddns.objects.NetWorkCMD.cmd;
 import jds_project.ddns.objects.ServerData;
 
 public class Client {
@@ -19,7 +21,6 @@ public class Client {
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
 
-	
 	private ServerData Data;
 
 	public Client() {
@@ -41,6 +42,10 @@ public class Client {
 	public void sendData() throws IOException {
 		oos.writeObject(this.Data);
 		oos.flush();
+
+		NetWorkCMD endCmd = new NetWorkCMD();
+		endCmd.setCommand(cmd.end);
+		oos.writeObject(endCmd);
 	}
 
 	public void openInputStream() throws IOException {
@@ -56,6 +61,11 @@ public class Client {
 				obj = ois.readObject();
 				if (obj instanceof String) {
 					System.out.println((String) obj);
+				} else if (obj instanceof NetWorkCMD) {
+					NetWorkCMD nCmd = (NetWorkCMD) obj;
+					if (nCmd.getCommand().equals(cmd.end)) {
+						break;
+					}
 				}
 
 			} catch (Exception e) {
@@ -87,7 +97,6 @@ public class Client {
 	public void setPort(int port) {
 		this.port = port;
 	}
-
 
 	public ServerData getData() {
 		return Data;
