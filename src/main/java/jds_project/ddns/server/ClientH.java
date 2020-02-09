@@ -54,6 +54,8 @@ public class ClientH implements Runnable {
 									break;
 								}
 								HEADER.datas.add(data);
+								stringBuilder
+										.append("зарегистрирован ID:" + data.getID() + " пароль:" + data.getPassword());
 							}
 						}
 						// ЕСТЬ
