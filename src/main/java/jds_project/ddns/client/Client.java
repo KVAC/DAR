@@ -71,6 +71,11 @@ public class Client {
 			} catch (Exception e) {
 				break;
 			}
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			// Если нет обработки -выходим
 		} while (socket.isConnected());
 	}
